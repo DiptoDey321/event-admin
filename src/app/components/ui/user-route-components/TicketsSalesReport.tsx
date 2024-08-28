@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useFetchApprovedEventsQuery, useGetSaleOrderQuery } from "@/redux/api/eventsApi";
 import type { TableColumnsType } from "antd";
 import { Modal, Table } from "antd";
-import { useFetchApprovedEventsQuery, useGetSaleOrderQuery } from "@/redux/api/eventsApi";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import BarChart from "./BarChart";
 
 const TicketsSalesReport = () => {
@@ -32,6 +32,13 @@ const TicketsSalesReport = () => {
   }
 
   const columns: TableColumnsType<DataType> = [
+    {
+      title: "No.",
+      dataIndex: "index",
+      key: "index",
+      width: 100,
+      render: (_: any, __: any, index: number) => index + 1,
+    },
     {
       title: "User Name",
       dataIndex: "created_by",

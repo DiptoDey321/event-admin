@@ -1,14 +1,13 @@
-import React, { useRef, useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import type { InputRef, TableColumnsType, TableColumnType } from "antd";
-import { Button, Input, message, Popconfirm, Space, Table } from "antd";
-import type { FilterDropdownProps } from "antd/es/table/interface";
-import Highlighter from "react-highlight-words";
-import { DeleteOutlined } from "@ant-design/icons";
 import {
   useFetchEventsQuery,
   useUpdateEventStatusMutation,
 } from "@/redux/api/eventsApi";
+import { SearchOutlined } from "@ant-design/icons";
+import type { InputRef, TableColumnsType, TableColumnType } from "antd";
+import { Button, Input, message, Space, Table } from "antd";
+import type { FilterDropdownProps } from "antd/es/table/interface";
+import React, { useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
 
 interface DataType {
   _id: string;
@@ -25,6 +24,7 @@ interface DataType {
   event_start_date_time: string;
   event_end_date_time: string;
   event_status: string;
+  phone : string
 }
 
 type DataIndex = keyof DataType;
@@ -128,6 +128,13 @@ const EventDetailsForUser: React.FC = () => {
 
   const columns: TableColumnsType<DataType> = [
     {
+      title: "No.",
+      dataIndex: "index",
+      key: "index",
+      width: 100,
+      render: (_: any, __: any, index: number) => index + 1,
+    },
+    {
       title: "User",
       dataIndex: "created_by",
       key: "created_by",
@@ -159,11 +166,13 @@ const EventDetailsForUser: React.FC = () => {
       ...getColumnSearchProps("venue_name"),
     },
     {
-      title: "User Email",
+      title: "User Email / Phone",
       dataIndex: "event_email",
       key: "event_email",
       width: 200,
-      ...getColumnSearchProps("event_email"),
+      render: (_, record) =>(
+        <span>{record.event_email ? record.event_email : record.phone}</span>
+      )
     },
     {
       title: "Event Description",
@@ -287,6 +296,9 @@ const EventDetailsForUser: React.FC = () => {
   const handleDelete = (key: string) => {
     console.log("Deleted:", key);
   };
+
+  console.log(data?.data);
+  
 
   return (
     <div>

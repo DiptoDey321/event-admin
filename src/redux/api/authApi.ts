@@ -21,14 +21,6 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ["DashboardTotalCount"],
     }),
-
-    getSaleOrder: build.query({
-      query: (eventId) => ({
-        url: `REPORT_URL/sale-order/${eventId}`,
-        method: "GET",
-      }),
-      providesTags: ["SaleOrder"],
-    }),
   }),
 });
 

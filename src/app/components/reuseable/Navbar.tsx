@@ -1,13 +1,13 @@
 "use client";
-import "./../ui/user-route-components/UserRouteStyle.css";
-import { Badge, Button, Tabs } from "antd";
-import { BellOutlined, BarsOutlined } from "@ant-design/icons";
+import { BarsOutlined } from "@ant-design/icons";
 import type { TabsProps } from "antd";
+import { Button, Tabs } from "antd";
 import { useState } from "react";
+import DashboardOverview from "../ui/user-route-components/DashboardOverview";
 import EventDetailsForUser from "../ui/user-route-components/EventDetailsForUser";
 import RightNav from "../ui/user-route-components/RightNav";
-import DashboardOverview from "../ui/user-route-components/DashboardOverview";
 import TicketsSalesReport from "../ui/user-route-components/TicketsSalesReport";
+import "./../ui/user-route-components/UserRouteStyle.css";
 const Navbar = () => {
 
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const Navbar = () => {
   return (
     <>
       <div className="dep-user-header">
-        <div className="logo">
+        <div className="logo" style={{cursor:"pointer"}}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="180"
@@ -103,7 +103,7 @@ const Navbar = () => {
           </svg>
         </div>
         <div className="dep-user-menu">
-          <p>Welcome, Super-Admin{}</p>
+          <p>Welcome, Super-Admin</p>
           {/* <Badge count={5}>
             <Button
               type="primary"

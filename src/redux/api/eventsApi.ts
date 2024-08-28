@@ -35,7 +35,7 @@ export const authApi = baseApi.injectEndpoints({
         url: `/admin/reports/sale-order/${eventId}`,
         method: "GET",
       }),
-      providesTags: ["SaleOrder"],
+      providesTags: ["SaleOrderReports"],
     }),
 
     deleteEvent: build.mutation<void, string>({

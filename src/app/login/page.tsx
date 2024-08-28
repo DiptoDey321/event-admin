@@ -1,14 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import "./login.css";
-import { useState } from "react";
-import { Form, Input, Button, message, Row, Col } from "antd";
-import { MailOutlined, LockOutlined, PhoneOutlined } from "@ant-design/icons";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { storeUserInfo } from "@/services/auth.service";
+import { LockOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
+import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+import "./login.css";
 
 const Login = () => {
   const [useEmail, setUseEmail] = useState(true);
@@ -17,22 +17,22 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const onFinish = async (values: any) => {
-    try {
-      const res = await userLogin({
-         username : values?.email,
-          password: values?.password,
-        }).unwrap();
-          if (res?.is_success) {
-          storeUserInfo({ access_token: res?.data?.access_token });
-          router.push("/user");
-        }
+  
+    const res = await userLogin({
+        username : values?.email,
+        password: values?.password,
+      })
 
-        console.log(res);
-        
-    } catch (error) {
-      
-    }
-    console.log(values);
+      if(res?.error){
+        message.error("Wrong Credentials")
+      }else{
+        storeUserInfo({ access_token: res?.data?.data?.access_token });
+        router.push("/user");
+      }
+
+      // if (res?.is_success) {
+      //   
+      // }
     
     // try {
     //   if (values.hasOwnProperty("phone")) {
@@ -219,7 +219,7 @@ const Login = () => {
               </div>
 
               {/* forget password  */}
-              <div
+              {/* <div
                 style={{
                   paddingTop: "10px",
                   display: "flex",
@@ -239,7 +239,7 @@ const Login = () => {
                     Reset
                   </span>
                 </span>
-              </div>
+              </div> */}
             </div>
          
 

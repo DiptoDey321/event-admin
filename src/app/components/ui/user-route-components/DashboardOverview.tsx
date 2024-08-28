@@ -1,21 +1,18 @@
 "use client"
 
 import { useGetDashboardTotalCountQuery } from "@/redux/api/authApi";
-import { Card, Col, Row } from "antd";
 import {
+  CalendarOutlined,
   DollarOutlined,
   ShoppingOutlined,
   UserOutlined,
-  CalendarOutlined,
 } from "@ant-design/icons";
+import { Card, Col, Row } from "antd";
 
 const DashboardOverview = () =>{
       const { data, error, isLoading } =
         useGetDashboardTotalCountQuery(undefined);
-
-        console.log(data);
-        
-        
+            
   return (
     <div style={{ paddingTop: "32px" }}>
       <Row gutter={[32, 32]}>
