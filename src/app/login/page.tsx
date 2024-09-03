@@ -2,11 +2,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useUserLoginMutation } from "@/redux/api/authApi";
-import { storeUserInfo } from "@/services/auth.service";
+import { isUserLoggedIn, storeUserInfo } from "@/services/auth.service";
 import { LockOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./login.css";
 
@@ -16,8 +16,15 @@ const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const userLoggedIn = isUserLoggedIn();
+
+  useEffect(() => {
+    if (userLoggedIn) {
+      router.push("/user");
+    }
+  }, [router, userLoggedIn]);
+
   const onFinish = async (values: any) => {
-  
     const res = await userLogin({
         username : values?.email,
         password: values?.password,
@@ -29,42 +36,6 @@ const Login = () => {
         storeUserInfo({ access_token: res?.data?.data?.access_token });
         router.push("/user");
       }
-
-      // if (res?.is_success) {
-      //   
-      // }
-    
-    // try {
-    //   if (values.hasOwnProperty("phone")) {
-    //     const res = await userLogin({
-    //       iso_code: "BD",
-    //       phone: values?.phone,
-    //       password: values?.password,
-    //       is_phone_selected: true,
-    //     }).unwrap();
-    //     if (res?.is_success) {
-    //       storeUserInfo({ access_token: res?.data?.access_token });
-    //       router.push("/user");
-    //     }
-    //   } else {
-    //     const res = await userLogin({
-    //       email: values?.email,
-    //       password: values?.password,
-    //       is_phone_selected: false,
-    //     }).unwrap();
-    //     if (res?.is_success) {
-    //       storeUserInfo({ access_token: res?.data?.access_token });
-    //       dispatch(
-    //         forUserLoggedIn({
-    //           user: res.data.user,
-    //         })
-    //       );
-    //       router.push("/user");
-    //     }
-    //   }
-    // } catch (error) {
-    //   message.warning("invalid username or password");
-    // }
   };
 
   return (

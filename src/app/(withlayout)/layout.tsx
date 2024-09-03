@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Contents from "../components/ui/user-route-components/Contents";
 import { isUserLoggedIn } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/reuseable/Navbar";
+import Contents from "../components/ui/user-route-components/Contents";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
 
   return (
-    <div>
+    <div className="width-control">
       <div className="user-main-layout">
         <Navbar></Navbar>
       </div>

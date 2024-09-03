@@ -87,3 +87,9 @@ body {
 .ant-drawer-content-wrapper {
   width: 300px !important;
 }
+
+
+.width-control{
+  max-width: 1600px !important;
+  margin: auto !important;
+}

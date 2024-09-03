@@ -126,6 +126,22 @@ const EventDetailsForUser: React.FC = () => {
       ),
   });
 
+  const transformData = (dataArray:any) => {
+    return dataArray?.map((item:any, index:any) => ({
+      index: index + 1, // Adding 1 to start from 1 instead of 0
+      created_by: ` ${item.created_by.first_name} ${item.created_by.last_name}`,
+      title: item.title,
+      address: item.address,
+      venue_name: item.venue_name,
+      event_email: item.event_email || item.phone, // Use email if available, otherwise phone
+      description: item.description,
+      event_start_date_time: item.event_start_date_time,
+      event_end_date_time: item.event_end_date_time,
+      event_status: item.event_status,
+      _id: item._id,
+    }));
+  };
+
   const columns: TableColumnsType<DataType> = [
     {
       title: "No.",
@@ -138,9 +154,10 @@ const EventDetailsForUser: React.FC = () => {
       title: "User",
       dataIndex: "created_by",
       key: "created_by",
-      render: (created_by) =>
-        `${created_by.first_name} ${created_by.last_name}`,
+      // render: (created_by) =>
+      //   `${created_by.first_name} ${created_by.last_name}`,
       width: 200,
+      ...getColumnSearchProps("created_by"),
     },
     {
       title: "Title",
@@ -170,9 +187,6 @@ const EventDetailsForUser: React.FC = () => {
       dataIndex: "event_email",
       key: "event_email",
       width: 200,
-      render: (_, record) =>(
-        <span>{record.event_email ? record.event_email : record.phone}</span>
-      )
     },
     {
       title: "Event Description",
@@ -296,8 +310,6 @@ const EventDetailsForUser: React.FC = () => {
   const handleDelete = (key: string) => {
     console.log("Deleted:", key);
   };
-
-  console.log(data?.data);
   
 
   return (
@@ -306,7 +318,7 @@ const EventDetailsForUser: React.FC = () => {
         <Table
           scroll={{ x: 1200, y: 400 }}
           columns={columns}
-          dataSource={data?.data}
+          dataSource={transformData(data?.data)}
         />
       </div>
     </div>
