@@ -1,13 +1,15 @@
 import {
+  useFetchEventByIdQuery,
   useFetchEventsQuery,
   useUpdateEventStatusMutation,
 } from "@/redux/api/eventsApi";
 import { SearchOutlined } from "@ant-design/icons";
 import type { InputRef, TableColumnsType, TableColumnType } from "antd";
-import { Button, Input, message, Space, Table } from "antd";
+import { Button, Input, message, Modal, Space, Spin, Table } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
 import React, { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
+import EventModal from "../event/EventModal";
 
 interface DataType {
   _id: string;
@@ -24,7 +26,7 @@ interface DataType {
   event_start_date_time: string;
   event_end_date_time: string;
   event_status: string;
-  phone : string
+  phone: string;
 }
 
 type DataIndex = keyof DataType;
@@ -34,6 +36,16 @@ const EventDetailsForUser: React.FC = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
   const [updateEventStatus] = useUpdateEventStatusMutation();
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const {
+    data: eventDetails,
+    error: eventDetailsError,
+    isLoading: eventDetailsLoading,
+  } = useFetchEventByIdQuery(selectedEventId as string, {
+    skip: !selectedEventId,
+  });
 
   const { data, error, isLoading } = useFetchEventsQuery(undefined);
 
@@ -126,14 +138,14 @@ const EventDetailsForUser: React.FC = () => {
       ),
   });
 
-  const transformData = (dataArray:any) => {
-    return dataArray?.map((item:any, index:any) => ({
-      index: index + 1, // Adding 1 to start from 1 instead of 0
+  const transformData = (dataArray: any) => {
+    return dataArray?.map((item: any, index: any) => ({
+      index: index + 1,
       created_by: ` ${item.created_by.first_name} ${item.created_by.last_name}`,
       title: item.title,
       address: item.address,
       venue_name: item.venue_name,
-      event_email: item.event_email || item.phone, // Use email if available, otherwise phone
+      event_email: item.event_email || item.phone, 
       description: item.description,
       event_start_date_time: item.event_start_date_time,
       event_end_date_time: item.event_end_date_time,
@@ -154,8 +166,6 @@ const EventDetailsForUser: React.FC = () => {
       title: "User",
       dataIndex: "created_by",
       key: "created_by",
-      // render: (created_by) =>
-      //   `${created_by.first_name} ${created_by.last_name}`,
       width: 200,
       ...getColumnSearchProps("created_by"),
     },
@@ -240,7 +250,10 @@ const EventDetailsForUser: React.FC = () => {
           {record.event_status != "approved" && (
             <Button
               type="primary"
-              onClick={() => handleApprove(record?._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleApprove(record?._id);
+              }}
               style={{ marginRight: 8 }}
             >
               Approve
@@ -250,7 +263,10 @@ const EventDetailsForUser: React.FC = () => {
           {record.event_status != "rejected" && (
             <Button
               type="primary"
-              onClick={() => handleReject(record?._id)}
+              onClick={(e) => {
+                e.stopPropagation(); 
+                handleReject(record?._id);
+              }}
               style={{ marginRight: 8 }}
             >
               Reject
@@ -260,7 +276,10 @@ const EventDetailsForUser: React.FC = () => {
           {record.event_status != "pending" && (
             <Button
               type="primary"
-              onClick={() => handlePending(record?._id)}
+              onClick={(e) => {
+                e.stopPropagation(); 
+                handlePending(record?._id);
+              }}
               style={{ marginRight: 8 }}
             >
               Pending
@@ -268,33 +287,12 @@ const EventDetailsForUser: React.FC = () => {
           )}
         </div>
       ),
-    },
-
-    // {
-    //   title: "Delete",
-    //   key: "del",
-    //   width: 100,
-    //   fixed: "right",
-    //   render: (_, record) => (
-    //     <div style={{ display: "flex", gap: "10px" }}>
-    //       <Popconfirm
-    //         title="Are you sure to delete this item?"
-    //         onConfirm={() => handleDelete(record?._id)}
-    //         okText="Yes"
-    //         cancelText="No"
-    //       >
-    //         <Button danger>
-    //           <DeleteOutlined />
-    //         </Button>
-    //       </Popconfirm>
-    //     </div>
-    //   ),
-    // },
+    }
   ];
 
-  const handleApprove = async(key: string) => {
+  const handleApprove = async (key: string) => {
     const res = await updateEventStatus({ id: key, status: "approved" });
-    message.success("Approved !")    
+    message.success("Approved !");
   };
 
   const handleReject = async (key: string) => {
@@ -302,25 +300,84 @@ const EventDetailsForUser: React.FC = () => {
     message.warning("Rejected !");
   };
 
-  const handlePending = async(key: string) => {
-     const res = await updateEventStatus({ id: key, status: "pending" });
-     message.warning("On Pending !");
+  const handlePending = async (key: string) => {
+    const res = await updateEventStatus({ id: key, status: "pending" });
+    message.warning("On Pending !");
   };
 
   const handleDelete = (key: string) => {
     console.log("Deleted:", key);
   };
-  
+
+  const handleRowClick = (record: any) => {
+    setSelectedEventId(record._id);
+    setIsModalVisible(true);
+  };
+
+  const handleCanel = () => {
+    setIsModalVisible(false);
+  };
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingTop: "50px",
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <div>
       <div className="">
         <Table
+          style={{
+            cursor: "pointer",
+            transition: "background-color 0.3s ease",
+          }}
           scroll={{ x: 1200, y: 400 }}
           columns={columns}
           dataSource={transformData(data?.data)}
+          onRow={(record) => ({
+            onClick: () => {
+              handleRowClick(record);
+            },
+          })}
         />
       </div>
+
+      <Modal
+        title="Event Details"
+        visible={isModalVisible}
+        onCancel={() => handleCanel()}
+        footer={null}
+        centered
+        width={900}
+      >
+        <div style={{ maxHeight: "450px", overflowY: "scroll" }}>
+          {eventDetailsLoading && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: "50px",
+              }}
+            >
+              <Spin />
+            </div>
+          )}
+          {eventDetails?.data && (
+            <EventModal eventDetails={eventDetails?.data}></EventModal>
+          )}
+        </div>
+      </Modal>
     </div>
   );
 };

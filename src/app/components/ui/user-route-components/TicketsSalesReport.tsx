@@ -211,7 +211,6 @@ const TicketsSalesReport = () => {
     if (saleOrderData?.data) {
       const formattedData = saleOrderData?.data?.map((item: any) => ({
         date:moment(item.created_at).format("MMM D YYYY"),
-
         price: item.paid_amount,
       }));
       setChartData(formattedData);
@@ -245,7 +244,10 @@ const TicketsSalesReport = () => {
         width={800}
       >
         {isSaleOrderLoading && <p>Loading chart data...</p>}
-        {chartData && <BarChart data={chartData}/>}
+        {chartData.length> 0 ? <BarChart data={chartData}/> : 
+        <div style={{height:"200px" , display:'flex', justifyContent: 'center' , alignItems:' center'}}>
+          <p>No records available</p>
+        </div>}
       </Modal>
     </div>
   );

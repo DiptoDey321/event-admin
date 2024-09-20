@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { removeUserInfo } from "@/services/auth.service";
-import { Select } from "antd";
-import { useRouter } from "next/navigation";
-import React, { useState } from 'react';
+import { message, Select } from "antd";
+import { usePathname, useRouter } from "next/navigation";
+import React from 'react';
 import "./UserRouteStyle.css";
 
 const { Option } = Select;
@@ -16,23 +16,12 @@ interface MenuProps {
 const RightNav:React.FC<MenuProps> =({ isOpen, closeMenu })=> {
   const router = useRouter();
 
-  const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    undefined
-  );
-
-  const handleChange = (value: string) => {
-    setSelectedValue(value);
-    console.log(`selected ${value}`);
-  };
-
-  const handleButtonClick = () => {
-    console.log("Button in option clicked");
-  };
-
   const handleLogOut = () =>{
     removeUserInfo();
      router.push("/login");
   }
+
+  const pathname = usePathname()
 
 
   return (
@@ -55,11 +44,11 @@ const RightNav:React.FC<MenuProps> =({ isOpen, closeMenu })=> {
         </div>
 
         <ul>
-          <li>Admins -</li>
-          <li>Category -</li>
-          <li>Payments -</li>
-          <li>Customization -</li>
-          <li>Declined Events -</li>
+          <li className={pathname == '/user' ? 'active-color' : ''} onClick={()=>location.href='/user'} >Home -</li>
+          <li className={pathname == '/category' ? 'active-color' : ''} onClick={()=> location.href='/category'} >Category -</li>
+          <li onClick={()=> message.info("Coming soon") }>Payments -</li>
+          <li onClick={()=> message.info("Coming soon")}>Customization -</li>
+          <li onClick={()=> message.info("Coming soon")}>Declined Events -</li>
           <li onClick={() => handleLogOut()}>Logout</li>
         </ul>
       </div>

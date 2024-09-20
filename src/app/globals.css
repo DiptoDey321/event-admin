@@ -93,3 +93,21 @@ body {
   max-width: 1600px !important;
   margin: auto !important;
 }
+
+.loading-style {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-popconfirm .ant-popconfirm-buttons {
+  text-align: end;
+  white-space: nowrap;
+  display: flex;
+  gap: 8px;
+  padding-top: 5px;
+  justify-content: end;
+}
+

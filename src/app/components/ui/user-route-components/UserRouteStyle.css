@@ -209,6 +209,10 @@
   justify-content: center;
 }
 
+.active-color{
+  color: #ecd500;
+}
+
 .user-profile {
   position: relative;
   .common-input-style {

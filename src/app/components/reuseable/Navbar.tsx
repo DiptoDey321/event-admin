@@ -1,42 +1,12 @@
 "use client";
 import { BarsOutlined } from "@ant-design/icons";
-import type { TabsProps } from "antd";
-import { Button, Tabs } from "antd";
+import { Button } from "antd";
 import { useState } from "react";
-import DashboardOverview from "../ui/user-route-components/DashboardOverview";
-import EventDetailsForUser from "../ui/user-route-components/EventDetailsForUser";
 import RightNav from "../ui/user-route-components/RightNav";
-import TicketsSalesReport from "../ui/user-route-components/TicketsSalesReport";
 import "./../ui/user-route-components/UserRouteStyle.css";
 const Navbar = () => {
 
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-
-  const openNotification = () => {
-    console.log("hello");
-  };
-
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Overview",
-      children: <DashboardOverview />,
-    },
-    {
-      key: "2",
-      label: "Events",
-      children: <EventDetailsForUser />,
-    },
-    {
-      key: "3",
-      label: "Tickets",
-      children: <TicketsSalesReport />,
-    },
-  ];
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -104,14 +74,6 @@ const Navbar = () => {
         </div>
         <div className="dep-user-menu">
           <p>Welcome, Super-Admin</p>
-          {/* <Badge count={5}>
-            <Button
-              type="primary"
-              shape="circle"
-              icon={<BellOutlined />}
-              onClick={openNotification}
-            />
-          </Badge> */}
           <Button
             type="primary"
             shape="circle"
@@ -121,9 +83,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="dep-user-main-menu">
-        <Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />
-      </div>
+      
 
       <div className="">
         <RightNav isOpen={menuOpen} closeMenu={closeMenu} />

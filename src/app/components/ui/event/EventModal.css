@@ -1,0 +1,217 @@
+.hero-section-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../../../../public/e1.jpg);
+  }
+  
+  .hero-section-container .blur {
+    width: 100vw;
+    padding: 50px 200px 100px 200px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .event-details-hero-card .upper-part {
+    color: rgb(207, 207, 207);
+    max-width: 1600px;
+    margin: auto !important;
+  }
+  
+  .event-details-hero-card .upper-part .conpany-name {
+    font-size: 24px;
+  }
+  
+  .event-details-hero-card .event-title {
+    font-size: 24px;
+    margin-top: 5px !important;
+    font-weight: 600;
+    color: rgb(223, 223, 223);
+  }
+  .event-details-hero-card .place-time {
+    /* padding-top: 10px; */
+    font-size: 20px;
+    color: rgb(70, 69, 69);
+    padding-bottom: 8px;
+  }
+  
+  .event-details-hero-card .location {
+    margin-top: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  
+  .event-details-hero-card .details {
+    margin-top: 20px !important;
+    font-size: 16px;
+  }
+  
+  .event-details-hero-card .img-container img {
+    border-radius: 10px;
+  }
+  
+  .antd-custome-card .ant-card {
+    background-color: #ffbf00;
+    border: none;
+  }
+  
+  .tickets-container {
+    padding: 50px 50px;
+    max-width: 1600px;
+    margin: auto !important;
+  }
+  
+  .tickets-container .tickets h2 {
+    color: azure;
+    padding-bottom: 8px;
+  }
+  
+  .tickets-container .tickets-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .tickets-container .tickets-card {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .tickets-container .tickets-lists {
+    margin-top: 40px !important;
+  }
+  
+  .tickets-cart-details {
+    width: 100%;
+  }
+  
+  .tickets-container .price-cartbtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .add-btn {
+      background-color: black;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 14px 28px,
+        rgba(0, 0, 0, 0.15) 0px 10px 10px;
+    }
+    .add-btn:hover {
+      background-color: black !important;
+    }
+  }
+  
+  .tickets-container .price {
+    font-size: 35px;
+    font-weight: 600;
+  }
+  
+  .tickets-container .details {
+    margin: 5px 0px 10px 0px !important;
+    font-size: 16px;
+  }
+  
+  .tickets-container .tickets-count {
+    margin-top: 8px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  
+  .event-details-page {
+    position: relative;
+  }
+  
+  .event-details-page .cart-section {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    cursor: pointer;
+  }
+  
+  .event-details-page .cart-section .cart-container-icon {
+    background-color: #ffbf00;
+    width: fit-content;
+    padding: 20px 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+      rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(252, 227, 5, 0.07) 0px 8px 16px,
+      rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(255, 230, 1, 0.07) 0px 32px 64px;
+    position: relative;
+  }
+  .event-details-page .cart-section .cart-container-icon .tickets-number {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 48%;
+    left: 52%;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-container.ant-modal .ant-modal-content {
+    background-color: #ffbf00 !important;
+    padding-bottom: 10px !important;
+  }
+  
+  .modal-container.ant-modal.ant-modal .ant-modal-header {
+    background-color: transparent;
+  }
+  
+  .tickets-container .event-desc {
+    margin-top: 40px !important;
+  }
+  
+  .payment-btn {
+    display: flex;
+    justify-content: end;
+    margin-top: 8px !important;
+    .custom-btn {
+      background-color: Black;
+      color: white;
+    }
+  
+    .custom-btn:hover {
+      background-color: Black;
+      color: white;
+    }
+  }
+  
+  @media (min-width: 320px) {
+    .hero-section-container .blur {
+      padding: 50px 20px 100px 20px;
+    }
+    .tickets-container .tickets-card {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  @media (min-width: 576px) {
+  }
+  @media (min-width: 768px) {
+    .hero-section-container .blur {
+      padding: 50px 50px 100px 50px;
+    }
+    .tickets-container .tickets-card {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  @media (min-width: 992px) {
+  }
+  @media (min-width: 1200px) {
+  }
+  

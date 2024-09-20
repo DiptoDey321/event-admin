@@ -12,6 +12,15 @@ export const authApi = baseApi.injectEndpoints({
       providesTags: ["events"],
     }),
 
+    fetchEventById: build.query({
+      query: (id: string) => ({
+        url: `${EVENTS_URL}/${id}`, 
+        method: "GET",
+        requiresAuth: true, 
+      }),
+      providesTags: ["eventsId"],
+    }),
+
     fetchApprovedEvents: build.query({
       query: () => ({
         url: `${EVENTS_URL}?event_type=approved`,
@@ -48,4 +57,4 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useFetchEventsQuery, useUpdateEventStatusMutation , useFetchApprovedEventsQuery , useGetSaleOrderQuery } = authApi;
+export const { useFetchEventsQuery, useUpdateEventStatusMutation , useFetchApprovedEventsQuery , useGetSaleOrderQuery, useFetchEventByIdQuery } = authApi;
