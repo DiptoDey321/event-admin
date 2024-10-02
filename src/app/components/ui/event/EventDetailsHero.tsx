@@ -16,7 +16,7 @@ interface EventCardProps {
   endTime: string;
   location: string;
   details: string;
-  imageUrl: StaticImageData;
+  imageUrl: StaticImageData | string;
   imageAlt: string;
 }
 

@@ -20,7 +20,7 @@ const EventModal = ({ eventDetails }: any) => {
             endTime={eventDetails?.event_end_date_time}
             location={eventDetails?.address}
             details={eventDetails?.description}
-            imageUrl={imgSrc}
+            imageUrl={eventDetails.event_image_url ? `https://link.storjshare.io/raw/jw2ydrl6k3ff65py2xpvvgm3qseq/${eventDetails.event_image_url}` : imgSrc}
             imageAlt="Event"
           ></EventDetailsHero>
         </div>
